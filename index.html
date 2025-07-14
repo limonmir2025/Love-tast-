@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <title>Love Test - দুইজনের পার্সেন্ট</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #ffd6e8, #fff0f5);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      padding: 50px 20px;
+      color: #c71585;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+    input {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      margin: 10px;
+      width: 250px;
+    }
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .progress-container {
+      margin-top: 40px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #d63384;
+      margin-bottom: 20px;
+    }
+    .heart {
+      font-size: 40px;
+      animation: pulse 1s infinite;
+      margin-top: 20px;
+    }
+    #finalMsg {
+      margin-top: 30px;
+      font-size: 20px;
+      color: #8b005d;
+      line-height: 1.6;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>❤️ Love Test ❤️</h1>
+
+  <input type="text" id="name1" placeholder="তোমার নাম" />
+  <br />
+  <input type="text" id="name2" placeholder="প্রিয়জনের নাম" />
+  <br />
+  <button onclick="startTest()">লাভ টেস্ট করো!</button>
+
+  <div id="progress1" class="progress-container"></div>
+  <div id="progress2" class="progress-container"></div>
+  <div id="heart" class="heart" style="display:none;">💗</div>
+  <div id="finalMsg"></div>
+
+  <script>
+    function animateProgress(element, targetPercent, callback) {
+      let current = 0;
+      const interval = setInterval(() => {
+        current++;
+        element.innerText = current + "%";
+        if (current >= targetPercent) {
+          clearInterval(interval);
+          callback && callback();
+        }
+      }, 40);
+    }
+
+    function startTest() {
+      const name1 = document.getElementById("name1").value.trim();
+      const name2 = document.getElementById("name2").value.trim();
+      const progress1 = document.getElementById("progress1");
+      const progress2 = document.getElementById("progress2");
+      const heart = document.getElementById("heart");
+      const finalMsg = document.getElementById("finalMsg");
+
+      if (!name1 || !name2) {
+        alert("দয়া করে দুইজনের নামই লিখুন!");
+        return;
+      }
+
+      progress1.innerText = "0%";
+      progress2.innerText = "0%";
+      finalMsg.innerText = "";
+      heart.style.display = "none";
+
+      // ভালোবাসার স্কোর এলোমেলো (৬০-১০০)
+      const score1 = Math.floor(Math.random() * 41) + 60;
+      const score2 = Math.floor(Math.random() * 41) + 60;
+
+      animateProgress(progress1, score1, () => {
+        animateProgress(progress2, score2, () => {
+          heart.style.display = "inline-block";
+          finalMsg.innerHTML = `
+            💖 ${name1} এর স্কোর: ${score1}%<br>
+            💖 ${name2} এর স্কোর: ${score2}%<br><br>
+            তোমাদের ভালোবাসা একসাথে ${Math.floor((score1 + score2) / 2)}%!<br>
+            সম্পর্ক সুন্দর রাখতে ভালোবাসা এবং যত্ন দরকার 🥰
+          `;
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>
